@@ -1,0 +1,15 @@
+#! /bin/env python
+
+from yoctools import Make
+
+env = Environment()
+
+# 添加protobuf-c库到LIBS属性
+env.Append(LIBS=['protobuf-c'])
+
+defconfig = Make(elf='yoc.elf', objcopy='yoc.bin', objdump='yoc.asm')
+
+
+Export('defconfig')
+
+defconfig.build_components()

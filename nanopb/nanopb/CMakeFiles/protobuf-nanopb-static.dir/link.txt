@@ -1,0 +1,2 @@
+/opt/rh/devtoolset-9/root/usr/bin/ar qc libprotobuf-nanopb.a "CMakeFiles/protobuf-nanopb-static.dir/pb_common.c.o" "CMakeFiles/protobuf-nanopb-static.dir/pb_encode.c.o" "CMakeFiles/protobuf-nanopb-static.dir/pb_decode.c.o"
+/opt/rh/devtoolset-9/root/usr/bin/ranlib libprotobuf-nanopb.a

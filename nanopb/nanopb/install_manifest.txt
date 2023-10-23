@@ -1,0 +1,15 @@
+/usr/local/lib/python3.9/site-packages/proto/nanopb_pb2.py
+/usr/local/lib/python3.9/site-packages/proto/nanopb.proto
+/usr/local/lib/python3.9/site-packages/proto/_utils.py
+/usr/local/lib/python3.9/site-packages/proto/__init__.py
+/usr/local/bin/nanopb_generator.py
+/usr/local/bin/protoc-gen-nanopb
+/usr/local/lib64/libprotobuf-nanopb.a
+/usr/local/lib64/cmake/nanopb/nanopb-targets.cmake
+/usr/local/lib64/cmake/nanopb/nanopb-targets-noconfig.cmake
+/usr/local/lib64/cmake/nanopb/nanopb-config.cmake
+/usr/local/lib64/cmake/nanopb/nanopb-config-version.cmake
+/usr/local/include/pb.h
+/usr/local/include/pb_common.h
+/usr/local/include/pb_encode.h
+/usr/local/include/pb_decode.h
