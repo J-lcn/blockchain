@@ -1,0 +1,87 @@
+syntax = "proto2";
+
+message TxRequest {
+	// payload
+	required Payload payload=1;
+	// sender account and sender's signature
+	required EndorsementEntry sender=2;
+	// endorsers account and signatures
+	repeated EndorsementEntry endorsers=3;
+	// payer account and signature
+	required EndorsementEntry payer=4;
+        
+}
+
+////////////////////////
+message Payload {
+	// blockchain identifier
+	required string  chain_id=1; 
+	// transaction type
+	required int32  tx_type=2;
+	// transaction id set by sender, should be unique
+	required string tx_id=3;
+	// transaction timestamp, in unix timestamp format, seconds
+	required int64 timestamp=4;
+	// expiration timestamp in unix timestamp format
+	// after that the transaction is invalid if it is not included in block yet
+	required int64 expiration_time=5;
+	// smart contract name
+	required string contract_name=6;
+	// invoke method
+	required string method=7;
+	// invoke parameters in k-v format
+	repeated KeyValuePair parameters=8;
+	// sequence number, default is 0
+	required uint64 sequence=9;
+	// transaction limitation
+	required Limit limit=10;
+}
+
+message KeyValuePair {
+	required  string key=1;
+	required bytes value=2;
+}
+
+
+message Limit {
+	// gas limit
+	required uint64 gas_limit=1;
+}
+///////////////////////////////////
+
+message EndorsementEntry {
+	// signer
+	required Member  signer=1;
+	// signature
+	required bytes signature=2;
+}
+
+message Member {
+	// organization identifier of the member
+	required string org_id=1;
+	// member type
+	required int32 member_type=2;
+	// member identity related info bytes
+	required bytes member_info=3;
+}
+//////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+TxRequest.endorsers          max_count:3
+Payload.chain_id              max_size:10
+Payload.tx_id                 max_size:33
+Payload.contract_name         max_size:10
+Payload.method                max_size:10
+Payload.parameters           max_count:3
+
+KeyValuePair.key            max_size:10
+KeyValuePair.value           max_size:32
+EndorsementEntry.signature    max_size:80
+Member.org_id                 max_size:10
+Member.member_info            max_size:32
+
+
+
+

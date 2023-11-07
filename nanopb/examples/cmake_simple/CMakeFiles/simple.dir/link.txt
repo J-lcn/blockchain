@@ -1,0 +1,1 @@
+/opt/rh/devtoolset-9/root/usr/bin/cc  -Wall -Werror -g -O0 -rdynamic CMakeFiles/simple.dir/simple.c.o CMakeFiles/simple.dir/simple.pb.c.o CMakeFiles/simple.dir/root/Desktop/nanopb/gitee/nanopb/pb_decode.c.o CMakeFiles/simple.dir/root/Desktop/nanopb/gitee/nanopb/pb_encode.c.o CMakeFiles/simple.dir/root/Desktop/nanopb/gitee/nanopb/pb_common.c.o -o simple 

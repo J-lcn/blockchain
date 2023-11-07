@@ -1,0 +1,3 @@
+blockchain 192.168.43.60 5565 192.168.43.88  8859  8c08ef63d523d5847619db9a685b1bac  1697889084  6f1d8ecadf
+0:blockchain
+1:certkey
