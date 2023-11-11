@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+
+
+message Payload {
+    // blockchain identifier
+    int64 req_num = 1;
+    // transaction type
+    string  req_name= 2;
+    // transaction id set by sender, should be unique
+    bytes  req_parameter = 3;
+    // transaction timestamp, in unix timestamp format, seconds
+    
+}
