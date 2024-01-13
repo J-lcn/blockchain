@@ -23,6 +23,7 @@ depends:
   - sdk_chip_ch2601: v7.8.0
   - netmgr: v7.8.0
   - ntp: v7.8.0
+  - posix: v7.8.0
   - cjson: v7.8.0
   - sal: v7.8.0
   - sec_crypto: v7.8.0
@@ -84,7 +85,6 @@ def_config:
   MBEDTLS_ASN1_WRITE_C: 1
   CONFIG_SEC_BASE64_SW: 1
   CONFIG_SEC_CRYPTO_RNG_SW: 1
-
 
 
 keywords: ~

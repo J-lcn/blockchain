@@ -53,8 +53,8 @@ int blockchainpb(Srcmessage *meg, Receivemessage *recmeg )
 	time(&currentTime);  
 	payloadpb.timestamp=(int64_t)currentTime;
 	//payloadpb.expiration_time=2000;
-	memcpy(payloadpb.contract_name,"evidence",strlen("evidence"));
-	memcpy(payloadpb.method,"Evidence",strlen("Evidence"));
+	memcpy(payloadpb.contract_name,"evidence",strlen("evidence"));////1
+	memcpy(payloadpb.method,"Evidence",strlen("Evidence"));//////2
 
 	payloadpb.parameters_count=3;
 	uint8_t id[32]={0};
@@ -158,8 +158,7 @@ int blockchainpb(Srcmessage *meg, Receivemessage *recmeg )
 	pb_encode(&stream, TxRequest_fields, &TxRequestpb);
 	message_length = stream.bytes_written;
 	recmeg->messagesize=message_length;
-	printf("message_length:%d\n",message_length);
-	printf("recmeg->messagesize:%d\n",recmeg->messagesize);
+
 	return 0;
 }
 

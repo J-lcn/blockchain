@@ -1,20 +1,17 @@
+
+
 package common
-
-
 import (
 	"fmt"
 	"net"
-	"encoding/asn1"
+	//"encoding/binary"
+	//"strconv"
 	"time"
+	// 其他需要的包...
 )
 
-type Request struct {
-	ServerName    string
-	Buffer        []byte
-}
-type Response struct {
-	Buffer        []byte
-}
+
+
 func RunServer(dataChan chan<- []byte,ipport string) {
 	listener, err := net.Listen("tcp", ipport)
 	if err != nil {
@@ -34,16 +31,22 @@ func RunServer(dataChan chan<- []byte,ipport string) {
 			return
 		}
 		
-		go handleConnection(conn)
+		remoteAddr := conn.RemoteAddr().String()
+		fmt.Println("Accepted connection from:", remoteAddr)
+		go handleConnection(conn, dataChan)
 	}
 
-	
+	// 当所有连接处理完成后，关闭通道
 	close(dataChan)
 }
 
-func handleConnection(conn net.Conn) {
+func handleConnection(conn net.Conn, dataChan chan<- []byte) {
 	defer conn.Close()
 	
+
+
+
+
 	// 启用Keep-Alive功能
 	tcpConn, ok := conn.(*net.TCPConn)
 	if !ok {
@@ -68,68 +71,51 @@ func handleConnection(conn net.Conn) {
 
 	buffer := make([]byte, 1024)
 	for{
-		datasize, err := conn.Read(buffer)
-		if err != nil {
-			fmt.Println("Error reading:", err)
-			return
-		}
-
-		receivedData := buffer[:datasize]
+	datasize, err := conn.Read(buffer)
+	if err != nil {
+		fmt.Println("Error reading:", err)
 		
-		var Requestlu Request
-		_, err = asn1.Unmarshal(receivedData, &Requestlu)
-		if err != nil {
-			fmt.Println("ASN.1 decoding failed:", err)
-			return
-		}
+		return
+	}
 
+	receivedData := buffer[:datasize]
+
+	flag:=receivedData[0]
+
+
+	switch flag {
+	    case 0:
 		
-		switch Requestlu.ServerName {
-		    case "blockchain":
+		 go Client(receivedData[1:]) 
+		response :=[]byte("blockchain: ok")
+		fmt.Println(response)
+		_, err = conn.Write(response)
+		if err != nil {
+			fmt.Println("Error writing response:", err)
 			
-			 go Client(receivedData[1:]) 
-			response :=Response{
-				Buffer:	[]byte("uping   blockchain"),
-			}
-		
-			asn1response, err := asn1.Marshal(response)
-			if err != nil {
-				fmt.Println("ASN.1 encoding failed:", err)
-				return
-			}
-			_, err = conn.Write(asn1response)
-			if err != nil {
-				fmt.Println("Error writing response:", err)
-				return
-			}	
-
-
-
-		    case "genAcount":
-			genresponse := GenAcount()
-
-			response :=Response{
-				Buffer:	genresponse,
-			}
-		
-			asn1response, err := asn1.Marshal(response)
-			if err != nil {
-				fmt.Println("ASN.1 encoding failed:", err)
-				return
-			}
-			_, err = conn.Write(asn1response)
-			if err != nil {
-				fmt.Println("Error writing response:", err)
-				return
-			}	
-
-		    default:
 			return
-		
+		}	
+
+
+
+	    case 1:
+		response := GenAcount()
+		fmt.Println("GenAccount: ok")
+		_, err = conn.Write(response)
+		if err != nil {
+			fmt.Println("Error writing response:", err)
+			
+			return
 		}
+	    case 3:
+		dataChan <- receivedData
+	    default:
+		return
+        
+	}
 
 	
-	}
+}
 
 		fmt.Println("connect close!")
 

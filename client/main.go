@@ -27,7 +27,7 @@ func main() {
 	
 
 	dataChan := make(chan []byte)
-	ipport:="192.168.43.88:8839"
+	ipport:="192.168.43.88:8829"
 	// 启动服务器在一个新的goroutine中异步执行
 	go lcc.RunServer(dataChan,ipport)
 	// 主goroutine中的其他代码，可以继续执行其他逻辑

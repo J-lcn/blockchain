@@ -11,6 +11,7 @@ import (
 	
 	sdk "chainmaker.org/chainmaker/sdk-go/v2"
 	
+	"log"
 )
 
 
@@ -25,17 +26,6 @@ const (
 //创建客户端函数
 func Client(data []byte) {
 	
-	defer func() {
-			// 在 defer 中使用 recover 捕获 panic
-			if r := recover(); r != nil {
-				// 处理 panic，这里可以打印日志等
-				fmt.Println("Goroutine recovered:", r)
-			}
-		}()
-
-
-
-
 	clientlu := NewChainClientbyOption()
 
 	fmt.Println("starting up chain: ok")
@@ -61,11 +51,11 @@ func Client(data []byte) {
 func NewChainClientlu() *sdk.ChainClient {
 	client, err := sdk.NewChainClient(sdk.WithConfPath(sdkConfigOrg1ClientPath))
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
 	err = client.CheckNewBlockChainConfig()
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
 	return client
 }
@@ -103,11 +93,11 @@ func NewChainClientbyOption() *sdk.ChainClient {
 		sdk.WithRetryInterval(2000),
 	)
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
 	err = client.CheckNewBlockChainConfig()
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
 	return client
 }

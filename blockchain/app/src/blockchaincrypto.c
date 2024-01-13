@@ -209,25 +209,25 @@ uint32_t DerencodeSig(uint8_t *signature, uint32_t signaturesize, unsigned char 
 	unsigned char *start = buffer;
 
 	// 编码原始数据
-	
-	if (mbedtls_asn1_write_mpi(&p, start, &(sigStruct.S)) < 0) {
-		printf("Error writing ASN.1 raw data: \n");
+	int  written_raw_bytes=mbedtls_asn1_write_mpi(&p, start, &(sigStruct.S));
+	if (written_raw_bytes < 0) {
+		printf("Error writing ASN.1 raw data: %d\n", written_raw_bytes);
 		return 1;
 	}
-	
-	if (mbedtls_asn1_write_mpi(&p, start, &(sigStruct.R)) < 0) {
-		printf("Error writing ASN.1 raw data: \n");
+	written_raw_bytes=mbedtls_asn1_write_mpi(&p, start, &(sigStruct.R));
+	if (written_raw_bytes < 0) {
+		printf("Error writing ASN.1 raw data: %d\n", written_raw_bytes);
 		return 1;
 	}
 	int written_len_bytes=buffersize-(p-start);
-
-	if (mbedtls_asn1_write_len(&p, start, written_len_bytes) < 0) {
-		printf("Error writing ASN.1 length field: \n");
+	int written_len_ret = mbedtls_asn1_write_len(&p, start, written_len_bytes);
+	if (written_len_ret < 0) {
+		printf("Error writing ASN.1 length field: %d\n", written_len_ret);
 		return 1;
 	}
-	
-	if (mbedtls_asn1_write_tag(&p, start, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE) < 0) {
-		printf("Error writing ASN.1 tag: \n");
+	int written_tag_ret = mbedtls_asn1_write_tag(&p, start, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE);
+	if (written_tag_ret < 0) {
+		printf("Error writing ASN.1 tag: %d\n", written_tag_ret);
 		return 1;
 	}
 	*derdata=p;

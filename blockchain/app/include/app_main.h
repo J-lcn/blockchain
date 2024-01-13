@@ -23,15 +23,10 @@
 #include "account.h"
 #include "cmd.h"
 #include <ntp.h>
-#include "vfsblockchain.h"
+
 #include "pb/blockchainpb.h"
 #include "blockchaincrypto.h"
 #include "blockchainsocket.h"
-#include "rpcblockchain.h"
-#include "interface.h"
-
-
-
 
 
 extern netmgr_hdl_t app_netmgr_hdl;

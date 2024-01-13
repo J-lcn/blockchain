@@ -24,10 +24,6 @@ uint32_t genkey(uint8_t *prikey,uint32_t *prikeylen, uint8_t *pubkey,uint32_t *p
 }
 
 
-
-
-
-
 uint32_t NewAccount()
 {
 	uint32_t ret=0;
@@ -40,29 +36,27 @@ uint32_t NewAccount()
 	genkey(prikey,&prikeylen, pubkey,&pubkeylen);
 
 
-	printf("Start GenAcount...\n");
-	request requestlu;
-	char *name="genAcount";
-	requestlu.server_name=(unsigned char *)name;
-	requestlu.server_namelen=strlen(name);
+	uint8_t sendbuffer[65]={0};
+	uint32_t sendbuffersize=65;
+	sendbuffer[0]=1;
+	memcpy(sendbuffer+1,pubkey,pubkeylen);
+	uint8_t receivedata[128]={0};
+	uint32_t receivedatasize=0;
+
 	
-	requestlu.buffer=pubkey;
-	requestlu.bufferlen=pubkeylen;
-	response responselu;
-	responselu.buffer=(unsigned char *)malloc(128);
-	responselu.bufferlen=128;
-	Rpcblockchain(&requestlu, &responselu);
+
+	blockchainsend((void *)sendbuffer,sendbuffersize, receivedata,&receivedatasize);
 
 	Account account;
 	InitAccount(&account);
-	memcpy(account.prikey,responselu.buffer,32);
-	memcpy(account.pubkey,responselu.buffer+32,64);
-	memcpy(account.certhash,responselu.buffer+96,32);
+	memcpy(account.prikey,receivedata,32);
+	memcpy(account.pubkey,receivedata+32,64);
+	memcpy(account.certhash,receivedata+96,32);
 	char key[]= {0x1b, 0xe1, 0xb2, 0x94, 0xaa, 0xfa, 0xab, 0xc6, 0x53, 0xea, 0x24, 0xf9, 0x1a, 0xbf, 0xc9, 0x48};
 	memcpy(account.aesprikey,key,16);
 	setAccount(&account);
 	
-	free(responselu.buffer);
+
 	return ret;
 }
 
